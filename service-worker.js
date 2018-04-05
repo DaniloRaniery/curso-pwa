@@ -1,13 +1,13 @@
 (function() {
-    var CACHE_SHELL = 'cache_v1';
-    var CACHE_DATA = 'cache_data_v1';
+    var CACHE_SHELL = 'cache_v2';
+    var CACHE_DATA = 'cache_data_v2';
     var API = 'https://newsapi.org/v2/';
     var FILES_SHELL = [
         '/',
         '/css/main.css',
         '/js/api.js',
-        '/Library/jquery-3.3.1.min.js',
-        '/Library/moment.min.js'
+        '/library/jquery-3.3.1.min.js',
+        '/library/moment.min.js'
     ];
 
     self.addEventListener('install', function(event) {
@@ -16,6 +16,20 @@
         event.waitUntil(
             self.caches.open(CACHE_SHELL).then(function (cache) {
                 return cache.addAll(FILES_SHELL);
+            })
+        )
+    });
+
+    self.addEventListener('activate', function (event){
+        console.log("Actived SW");
+        var cacheList = [CACHE_SHELL, CACHE_DATA];
+        event.waitUntil(
+            self.caches.keys().then(function (cacheNames){
+                return Promise.all(cacheNames.map(function (cacheName){
+                    if (cacheList.indexOf(cacheName) === -1){
+                        self.caches.delete(cacheName)
+                    }
+                }));
             })
         )
     });
@@ -45,4 +59,4 @@
         }        
         
     });
-}());
+})();
