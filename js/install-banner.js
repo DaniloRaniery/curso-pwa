@@ -4,23 +4,26 @@
     var eventInstall;
     var btInstall = $("#bt-install");
 
-    window.addEventListener('beforeInstallprompt', function (event){
+    window.addEventListener('beforeinstallprompt', function (event){
         
-        console.log('beforeInstallPrompt')
+        console.log('beforeinstallPrompt')
         eventInstall = event;
         event.preventDefault();
         btInstall.show();
+        return false;
     });
     
     btInstall.click(function(){
+    
         if (eventInstall){
             eventInstall.prompt();
 
             eventInstall.userChoice.then(function(choiceResult){
-                if (choiceResult.outcome == "dismissed"){
-                    alert("Que pena!");
+                if (choiceResult.outcome === "accepted"){
+                    alert("Valeu!");
                 } else{
-                    alert ("Veleu!");
+                    console.log(choiceResult.outcome);
+                    alert ("Que pena!");
                 }
             });
 

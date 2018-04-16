@@ -39,6 +39,14 @@ button {
     cursor: pointer;
 }
 
+#bt-alert{
+    display: none;
+}
+
+#bt-install{
+    display: none;
+}
+
 .screen-width{
     padding: 10px;
 }
@@ -73,6 +81,17 @@ button {
 }
 #top-news-link{
         padding: 10px;
+}
+
+#connection{
+    text-align: center;
+    color: #5cb85c;
+    font-style: oblique;
+    font-weight: bold;
+}
+
+.offline {
+    color: #f50000;
 }
 
 @media (max-width: 575px){

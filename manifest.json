@@ -6,7 +6,7 @@
     "start_url": "/index.html",
     "related_applications": [
         {
-            "plataform": "play",
+            "platform": "play",
             "id": "br.com.pwa-news"
         }
     ],

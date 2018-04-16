@@ -11,6 +11,57 @@
 
     getNews();
 
+    var permissionNotification = false;
+
+    var btAlert = $('#bt-alert');
+
+    if ('Notification' in window) {
+        permissionNotification = Notification.permission;
+        console.log(permissionNotification);
+        if (permissionNotification === 'default') {
+            btAlert.show();
+        }
+
+        btAlert.on('click', function () {
+            if (permissionNotification != 'granted') {
+                Notification.requestPermission(function (perm) {
+                    permissionNotification = perm
+                })
+            }
+        });
+    }
+
+    // Para testar o push automático
+    // window.onblur = function onblur() {
+    //     if (permissionNotification === 'granted') {
+    //         btAlert.hide();
+    //         setTimeout(function () {
+    //             navigator.serviceWorker.getRegistration()
+    //                 .then(function (reg) {
+    //                     var options = {
+    //                         body: 'Lula foi ...',
+    //                         icon: '/image/apple-touch-icon.png',
+    //                         badge: '/image/apple-touch-icon.png'
+    //                     };
+    //                     reg.showNotification("Ei tem novas notícias :)", options);
+    //                 });
+    //         }, 3000);
+    //     }
+    // }
+
+    if ("ondevicelight" in window) {
+        window.addEventListener("deviceLight", onUpdateDeviceLight);
+    } else {
+        console.log("There is no onedevicelight");
+    }
+
+    function onUpdateDeviceLight(event) {
+        var colorPart = Math.min(255, event.value).toFixed(0);
+        document.getElementById("body").style.backgroundColor = "rgb(" + colorPart + ", " +
+            colorPart + ", " + colorPart + ")";
+
+    }
+
     function getNews() {
         var url = API + ENDPOINT_HEADLINES + 'country=br&' + API_KEY + getCategory();
         $.get(url, success);
@@ -24,14 +75,14 @@
     function success(data) {
         var divNews = $('#news');
         divNews.empty();
-        setTopNews( data.articles[0]);
-        for (var i = 1; i < data.articles.length-1; ++i) {
+        setTopNews(data.articles[0]);
+        for (var i = 1; i < data.articles.length - 1; ++i) {
             divNews.append(getNewsHtml(data.articles[i]));
         }
     }
 
     function setTopNews(article) {
-        if(article) {
+        if (article) {
             $('#top-news-title').text(article.title);
             $('#top-news-description').text(article.description);
             $('#top-news-image').attr('src', article.urlToImage).attr('alt', article.title);
@@ -137,4 +188,50 @@
         }
     }
 
+    document.getElementById('status').innerHTML = navigator.onLine ? 'online' : 'offline';
+
+    function handleStateChange() {
+        var timeBadge = new Date().toTimeString().split(' ')[0];
+        var newState = document.createElement('p');
+        var state = navigator.onLine ? 'online' : 'offline';
+        document.getElementById('status').innerHTML = state;
+        if (state === "offline"){
+            $("#status").addClass("offline");
+            $("#status").removeClass("online");
+        } else if (state === "online"){
+            $("#status").removeClass("offline");
+            $("#status").addClass("online");
+        } else{
+            handleStateChange();
+        }
+    }
+
+    window.addEventListener('online', handleStateChange);
+    window.addEventListener('offline', handleStateChange);
+
+    handleStateChange();
+
+
+    if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)) {
+        var target = document.getElementById('target');
+      
+        function handleChange(change) {
+          var timeBadge = new Date().toTimeString().split(' ')[0];
+          var newState = document.createElement('p');
+          newState.innerHTML = '<span class="badge">' + timeBadge + '</span> ' + change + '.';
+        }
+           
+        var batteryPromise;
+        
+        if ('getBattery' in navigator) {
+          batteryPromise = navigator.getBattery();
+        } else {
+          batteryPromise = Promise.resolve(navigator.battery);
+        }
+        
+        batteryPromise.then(function (battery) {
+          document.getElementById('level').innerHTML = (battery.level)*100;
+          battery.addEventListener('levelchange', onLevelChange);
+        });
+      }
 })();
