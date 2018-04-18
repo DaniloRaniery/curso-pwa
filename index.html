@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="Description" content="PWA news">
-    <meta name="viewport" content="width=device=width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
+    <meta name="theme-color" content="#5cb85c"/>
+    <meta name="robots" content="noindex"/>
     <title>PWA NEWS</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
@@ -14,7 +16,7 @@
 
 <body id="body">
     <div class="container">
-        <header class="py-3">
+        <header>
             <link rel="apple-touch-icon" sizes="180x180" href="image/apple-touch-icon.png">
             <link rel="icon" type="image/png" sizes="32x32" href="image/favicon-32x32.png">
             <link rel="icon" type="image/png" sizes="16x16" href="image/favicon-16x16.png">
@@ -29,11 +31,8 @@
                     <div id="connection">
                         <p> App <b id="status">unknown</b></p>
                         <p> Bateria <b id="level">unknown</b> % </p>
-
-                        <div id="target"></div>
                     </div>
                 </div>
-
                 <div class="col col-lg-2"></div>
             </div>
 
@@ -83,7 +82,7 @@
                     <h4 id="top-news-title" class="font-italic"></h4>
                     <p id="top-news-description" class="lead my-3"></p>
                     <p class="lead mb-0">
-                        <a href="#" target="_blank" id="top-news-link" class="text-white font-weight-bold">Continue Reading...</a>
+                        <a href="#" target="_blank" rel="noopener" id="top-news-link" class="text-white font-weight-bold">Continue Reading...</a>
                     </p>
                 </div>
 

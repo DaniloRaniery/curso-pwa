@@ -231,7 +231,6 @@
         
         batteryPromise.then(function (battery) {
           document.getElementById('level').innerHTML = (battery.level)*100;
-          battery.addEventListener('levelchange', onLevelChange);
         });
       }
 })();

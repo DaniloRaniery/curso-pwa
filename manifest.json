@@ -3,7 +3,9 @@
     "short_name": "PWA News",
     "orientation": "portrait",
     "display": "standalone",
+    "theme_color": "#5cb85c",
     "start_url": "/index.html",
+    "background_color": "#5cb85c",
     "related_applications": [
         {
             "platform": "play",
@@ -14,6 +16,11 @@
         {
             "src": "/image/android-chrome-192x192.png",
             "sizes": "192x192",
+            "type": "image/png"
+        },
+        {        
+            "src": "/image/nnorte_fb_400x400.png",
+            "sizes": "592x592",
             "type": "image/png"
         }
     ]

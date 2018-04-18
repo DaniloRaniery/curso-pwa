@@ -80,7 +80,7 @@ button {
     padding: 10px;
 }
 #top-news-link{
-        padding: 10px;
+    padding: 10px;
 }
 
 #connection{
@@ -99,26 +99,34 @@ button {
         width: 100%;
     }
     .card-title {
-    font-size: 105%;
-    }
-    .card-subtitle {
-        font-size: 80%;
-    }
-    .card-text {
-        font-size: 90%;
-    }
-    .btn-link{
-        font-size: 100%;
-    }
-    #top-news-title{
-        font-size: 105%;
-    }
-    #top-news-link{
         font-size: 85%;
     }
+    .card-subtitle {
+        font-size: 70%;
+    }
+    .card-text {
+        font-size: 80%;
+    }
+    .btn-link{
+        font-size: 80%;
+    }
+    #top-news-title{
+        font-size: 90%;
+        align-self: center;
+    }
+    #top-news-link{
+        font-size: 60%;
+    }
     #top-news-description{
-        font-size: 95%;
+        font-size: 85%;
     } 
+    .card-img-top {
+        max-height: 250px;
+        max-width: 150px;
+        height: auto;
+        width: auto;
+        align-self: center;
+    }
 }
 
 @media (min-width: 576px){
