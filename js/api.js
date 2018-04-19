@@ -85,7 +85,12 @@
         if (article) {
             $('#top-news-title').text(article.title);
             $('#top-news-description').text(article.description);
-            $('#top-news-image').attr('src', article.urlToImage).attr('alt', article.title);
+            if (article.urlToImage === null) {
+                $('#top-news-image').attr('src', "/image/default-top-news.png");
+            } else {
+                $('#top-news-image').attr('src', article.urlToImage);
+            }
+            $('#top-news-image').attr('alt', article.title);
             $('#top-news-link').attr('href', article.url);
         }
     }
@@ -154,12 +159,21 @@
         return card;
 
         function addImage(card) {
+
             if (article.urlToImage) {
                 return card.append(
                     $('<img>')
                         .attr('src', article.urlToImage)
                         .attr('alt', article.title)
                         .addClass('card-img-top')
+                );
+            } else {
+                return card.append(
+                    $('<img>')
+                        .attr('src', "/image/default-card-news.png")
+                        .attr('alt', article.title)
+                        .addClass('card-img-top')
+
                 );
             }
             return card;
@@ -195,13 +209,13 @@
         var newState = document.createElement('p');
         var state = navigator.onLine ? 'online' : 'offline';
         document.getElementById('status').innerHTML = state;
-        if (state === "offline"){
+        if (state === "offline") {
             $("#status").addClass("offline");
             $("#status").removeClass("online");
-        } else if (state === "online"){
+        } else if (state === "online") {
             $("#status").removeClass("offline");
             $("#status").addClass("online");
-        } else{
+        } else {
             handleStateChange();
         }
     }
@@ -214,23 +228,23 @@
 
     if ('getBattery' in navigator || ('battery' in navigator && 'Promise' in window)) {
         var target = document.getElementById('target');
-      
+
         function handleChange(change) {
-          var timeBadge = new Date().toTimeString().split(' ')[0];
-          var newState = document.createElement('p');
-          newState.innerHTML = '<span class="badge">' + timeBadge + '</span> ' + change + '.';
+            var timeBadge = new Date().toTimeString().split(' ')[0];
+            var newState = document.createElement('p');
+            newState.innerHTML = '<span class="badge">' + timeBadge + '</span> ' + change + '.';
         }
-           
+
         var batteryPromise;
-        
+
         if ('getBattery' in navigator) {
-          batteryPromise = navigator.getBattery();
+            batteryPromise = navigator.getBattery();
         } else {
-          batteryPromise = Promise.resolve(navigator.battery);
+            batteryPromise = Promise.resolve(navigator.battery);
         }
-        
+
         batteryPromise.then(function (battery) {
-          document.getElementById('level').innerHTML = (battery.level)*100;
+            document.getElementById('level').innerHTML = (battery.level) * 100;
         });
-      }
+    }
 })();
